@@ -1,12 +1,18 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
+const dotenv_1 = __importDefault(require("dotenv"));
+// Load environment variables from .env file
+dotenv_1.default.config();
 const sequelize = new sequelize_1.Sequelize({
     dialect: 'postgres',
-    host: 'localhost',
-    port: 6009,
-    username: 'postgres',
-    password: 'password',
-    database: 'tr_movies_db',
+    host: process.env.DB_HOST,
+    port: parseInt(process.env.DB_PORT || '', 10),
+    username: process.env.DB_USER_NAME,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
 });
 exports.default = sequelize;

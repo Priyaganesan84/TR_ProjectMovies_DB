@@ -1,12 +1,18 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const pg_1 = require("pg");
+const dotenv_1 = __importDefault(require("dotenv"));
+// Load environment variables from .env file
+dotenv_1.default.config();
 const dbConfig = {
-    user: 'postgres',
-    password: 'password',
-    database: 'postgres',
-    host: 'localhost',
-    port: 6009, // Change this to your database port if needed
+    host: process.env.DB_HOST,
+    port: parseInt(process.env.DB_PORT || '', 10),
+    user: process.env.DB_USER_NAME,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
 };
 const client = new pg_1.Client(dbConfig);
 // Function to connect to the database

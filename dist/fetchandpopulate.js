@@ -6,12 +6,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // fetchAndPopulate.ts
 const axios_1 = __importDefault(require("axios"));
 const pg_1 = require("pg");
+require('dotenv').config();
 const dbConfig = {
-    user: 'postgres',
-    password: 'password',
-    database: 'tr_movies_db',
-    host: 'localhost',
-    port: 6009, // Change this to your database port if needed
+    //user: 'postgres',
+    //password: 'password',
+    //database: 'tr_movies_db',
+    //host: 'localhost', // Change this to your database host if it's not local
+    //port: 6009, // Change this to your database port if needed
+    host: process.env.DB_HOST,
+    port: parseInt(process.env.DB_PORT || '', 10),
+    user: process.env.DB_USER_NAME,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
 };
 const client = new pg_1.Client(dbConfig);
 // Function to connect to the database

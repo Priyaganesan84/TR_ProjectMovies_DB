@@ -2,12 +2,22 @@
 import axios from 'axios';
 import { Client } from 'pg';
 
+require('dotenv').config();
+
+
+
 const dbConfig = {
-  user: 'postgres',
-  password: 'password',
-  database: 'tr_movies_db',
-  host: 'localhost', // Change this to your database host if it's not local
-  port: 6009, // Change this to your database port if needed
+  //user: 'postgres',
+  //password: 'password',
+  //database: 'tr_movies_db',
+  //host: 'localhost', // Change this to your database host if it's not local
+  //port: 6009, // Change this to your database port if needed
+
+  host: process.env.DB_HOST as string, // Ensure these are of type 'string'
+  port: parseInt(process.env.DB_PORT || '', 10) as number, // Parse port as a number
+  user: process.env.DB_USER_NAME as string,
+  password: process.env.DB_PASSWORD as string,
+  database: process.env.DB_DATABASE as string,
 };
 
 const client = new Client(dbConfig);
