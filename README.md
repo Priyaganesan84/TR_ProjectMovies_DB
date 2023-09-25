@@ -87,7 +87,6 @@ TMDB_API_KEY=your_tmdb_api_key
 - **URL**: `/api/media`
 - **HTTP Method**: `GET`
 - **Purpose**: Fetches a list of all media items, including movies, TV shows, and more.
-- **Request Parameters**: None
 - **Response Format**: JSON array containing media items.
 
 ### Retrieve Movies
@@ -95,7 +94,6 @@ TMDB_API_KEY=your_tmdb_api_key
 - **URL**: `/api/media/movies`
 - **HTTP Method**: `GET`
 - **Purpose**: Retrieves a list of movies from the media database.
-- **Request Parameters**: None
 - **Response Format**: JSON array containing movie items.
 
 ### Retrieve TV Shows
@@ -103,7 +101,6 @@ TMDB_API_KEY=your_tmdb_api_key
 - **URL**: `/api/media/tv`
 - **HTTP Method**: `GET`
 - **Purpose**: Retrieves a list of TV shows from the media database.
-- **Request Parameters**: None
 - **Response Format**: JSON array containing TV show items.
 
 
