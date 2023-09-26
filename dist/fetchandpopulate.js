@@ -3,43 +3,40 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// fetchAndPopulate.ts
+exports.fetchDataAndPopulateDatabase = exports.disconnectFromDatabase = exports.connectToDatabase = exports.client = void 0;
 const axios_1 = __importDefault(require("axios"));
 const pg_1 = require("pg");
 require('dotenv').config();
 const dbConfig = {
-    //user: 'postgres',
-    //password: 'password',
-    //database: 'tr_movies_db',
-    //host: 'localhost', // Change this to your database host if it's not local
-    //port: 6009, // Change this to your database port if needed
     host: process.env.DB_HOST,
     port: parseInt(process.env.DB_PORT || '', 10),
     user: process.env.DB_USER_NAME,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
 };
-const client = new pg_1.Client(dbConfig);
+exports.client = new pg_1.Client(dbConfig); // Export the client object
 // Function to connect to the database
 async function connectToDatabase() {
     try {
-        await client.connect();
+        await exports.client.connect();
         console.log('Connected to PostgreSQL database');
     }
     catch (error) {
         console.error('Error connecting to PostgreSQL database:', error);
     }
 }
+exports.connectToDatabase = connectToDatabase;
 // Function to close the database connection
 async function disconnectFromDatabase() {
     try {
-        await client.end();
+        await exports.client.end();
         console.log('Disconnected from PostgreSQL database');
     }
     catch (error) {
         console.error('Error disconnecting from PostgreSQL database:', error);
     }
 }
+exports.disconnectFromDatabase = disconnectFromDatabase;
 async function fetchDataAndPopulateDatabase() {
     try {
         // Connect to the database
@@ -53,7 +50,7 @@ async function fetchDataAndPopulateDatabase() {
         const mediaData = response.data.results;
         // Insert data into the database
         for (const media of mediaData) {
-            await client.query('INSERT INTO media (title, media_type, release_date, poster_path, vote_average) VALUES ($1, $2, $3, $4, $5)', [
+            await exports.client.query('INSERT INTO media (title, media_type, release_date, poster_path, vote_average) VALUES ($1, $2, $3, $4, $5)', [
                 media.title || media.name,
                 media.media_type,
                 media.first_air_date || media.release_date,
@@ -71,5 +68,9 @@ async function fetchDataAndPopulateDatabase() {
         await disconnectFromDatabase();
     }
 }
+exports.fetchDataAndPopulateDatabase = fetchDataAndPopulateDatabase;
 // Run the script
-fetchDataAndPopulateDatabase();
+// This line should be removed when running tests to prevent automatic execution
+if (process.env.NODE_ENV !== 'test') {
+    fetchDataAndPopulateDatabase();
+}
