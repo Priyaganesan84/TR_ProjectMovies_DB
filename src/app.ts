@@ -7,7 +7,7 @@ import Media from './models/Media'; // Define Models
 
 
 
-const app = express();
+export const app = express();
 const port = 3000;
 
 
